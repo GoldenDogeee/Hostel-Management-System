@@ -82,3 +82,4 @@ main h2{font-size:26px;margin-bottom:14px}
 #ap button:not(.g):not(.d):not(.nav button):not(header button){background:#111827;color:#fff}
 @media(max-width:760px){.lhero{grid-template-columns:1fr}.bld{margin:0}#sp header,#ap header{flex-wrap:wrap;padding:10px 14px}.nav{order:3;flex-basis:100%}#ap .nav button{padding:10px}}
 @media(prefers-reduced-motion:no-preference){.bld i.l{animation:gl 4s ease-in-out infinite alternate}.door{transition:transform .15s}.door:hover{transform:translateY(-2px)}@keyframes gl{to{opacity:.72}}}
+.donut{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;position:relative;flex:none}.donut:before{content:"";position:absolute;inset:16px;background:var(--card);border-radius:50%}.donut b{position:relative;font-size:22px;font-family:Georgia,serif}

@@ -21,6 +21,14 @@ A browser-based hostel management app built with HTML, CSS and JavaScript. It is
 - Resolve complaints and post notices
 - Settings: hostel fee, admin password, backup and restore, demo data, reset
 
+## Extra features
+
+- Smart allocate: places roomless students automatically, grouping course mates together
+- Gate pass: students request time out, the warden approves, rejects or marks returned, overdue passes are flagged
+- Printable fee receipts and payment history for students and the warden
+- Overview donut chart for fee collection and plain-language smart insights
+- Export students as CSV, light and dark theme toggle
+
 ## Rules
 
 - 20 rooms, numbered 101 to 120
