@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hostel Management System</title>
+<link rel="stylesheet" href="style.css"></head><body>
+
+<div id="launch"><div class="wrap">
+<div class="lh"><span class="logo">Hostel Management System</span><div class="row"><button class="g" onclick="toLogin('student')">Student login</button><button class="g" onclick="toLogin('admin')">Admin login</button></div></div>
+<section class="lhero"><div>
+<h1>A calmer way to run a hostel.</h1>
+<p>Wardens manage students, rooms and fees in one place. Students sign in to see open rooms, request one, and track their own fees and complaints.</p>
+<div class="row"><button onclick="toLogin('student')">Student login</button><button class="g" onclick="toLogin('admin')">Admin login</button></div></div>
+<div class="bld" id="bld"></div></section>
+<section class="lsec"><h2>Built for both sides of the door</h2><div class="g3">
+<div class="lc"><h3>For students</h3><p>Check room availability, send a room request, see what you owe, and raise a complaint.</p></div>
+<div class="lc"><h3>For wardens</h3><p>Approve requests, block rooms for repairs, record payments, resolve complaints, and post notices.</p></div>
+<div class="lc"><h3>For the records</h3><p>Two students per room, rooms 101 to 120, a full activity log, and backup and restore.</p></div></div></section>
+<section class="lsec"><h2>How it works</h2><ol class="steps">
+<li>The warden adds students and sets the hostel fee.</li><li>Students sign in and request a free room.</li><li>The warden approves the request and the room is assigned.</li><li>Fees, complaints and notices are tracked from then on.</li></ol></section>
+<footer>Built with HTML, CSS and JavaScript. Data is saved in this browser's localStorage.</footer>
+</div></div>
+
+<div id="login" class="hidden"><div class="lbox">
+<h2>Sign in</h2>
+<div class="seg"><button id="rs" onclick="setRole('student')">Student</button><button id="ra" onclick="setRole('admin')">Admin</button></div>
+<div class="f"><label for="u" id="ul">Student ID</label><input id="u" autocomplete="username"></div>
+<div class="f"><label for="p" id="pl">PIN</label><input id="p" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+<div class="row"><button onclick="doLogin()">Sign in</button><button class="g" onclick="show('launch')">Back</button></div>
+<p class="hint" id="lh">Demo only: this login runs in the browser. A real system needs server-side authentication.</p>
+</div></div>
+
+<div id="sp" class="hidden"><header><span class="logo">My Hostel</span>
+<div class="nav"><button data-t="home" onclick="stab('home')">Home</button><button data-t="rooms" onclick="stab('rooms')">Rooms</button><button data-t="fees" onclick="stab('fees')">My fees</button><button data-t="help" onclick="stab('help')">Support</button></div>
+<button class="g" onclick="logout()">Log out</button></header>
+<main>
+<section id="s-home" class="tab"><h2 id="hi"></h2><div class="cards" id="hc"></div>
+<div class="panel"><h3>Notices</h3><div id="sn"></div></div>
+<div class="panel"><h3>Change PIN</h3><div class="form"><div><label for="np">New PIN (4+ characters)</label><input id="np" type="password"></div><button onclick="setPin()">Save PIN</button></div></div></section>
+<section id="s-rooms" class="tab hidden"><h2>Room availability</h2>
+<div class="panel"><div class="rooms" id="srg"></div>
+<div class="legend"><span>Green: empty</span><span>Orange: 1 of 2 beds taken</span><span>Red: full</span><span>Dashed: blocked</span><span>Filled: your room</span></div></div>
+<div class="panel" id="srd"><h3>Select a room</h3><p class="hint">Click a room to see if you can request it.</p></div>
+<div class="panel"><h3>My requests</h3><div class="tw"><table><thead><tr><th>Room</th><th>Date</th><th>Status</th></tr></thead><tbody id="srq"></tbody></table></div></div></section>
+<section id="s-fees" class="tab hidden"><h2>My fees</h2><div class="cards" id="sfc"></div><div class="panel"><h3>Payment progress</h3><div class="bar"><i id="sfb"></i></div><p class="hint" id="sft"></p></div></section>
+<section id="s-help" class="tab hidden"><h2>Support</h2>
+<div class="panel"><h3>Raise a complaint</h3><label for="ct">What needs fixing?</label><textarea id="ct" rows="3"></textarea><div style="margin-top:10px"><button onclick="addCmp()">Submit complaint</button></div></div>
+<div class="panel"><h3>My complaints</h3><div id="scl"></div></div></section>
+</main></div>
+
+<div id="ap" class="hidden"><header><span class="logo">Warden Console</span>
+<div class="nav"><button data-t="dash" onclick="atab('dash')">Overview</button><button data-t="stu" onclick="atab('stu')">Students</button><button data-t="req" onclick="atab('req')">Requests<em id="bq" class="hidden"></em></button><button data-t="rooms" onclick="atab('rooms')">Rooms</button><button data-t="fees" onclick="atab('fees')">Fees</button><button data-t="cmp" onclick="atab('cmp')">Complaints<em id="bc" class="hidden"></em></button><button data-t="notes" onclick="atab('notes')">Notices</button><button data-t="set" onclick="atab('set')">Settings</button></div>
+<button onclick="logout()">Log out</button></header>
+<main>
+<section id="a-dash" class="tab"><h2>Overview</h2><div class="cards" id="ac"></div>
+<div class="panel"><h3>Occupancy</h3><div class="bar"><i id="occb"></i></div><p id="occt" class="hint"></p></div>
+<div class="g3"><div class="panel"><h3>Students by course</h3><div id="crs"></div></div><div class="panel"><h3>Fee status</h3><div id="fst"></div></div></div>
+<div class="panel"><h3>Recent activity</h3><div class="log" id="log1"></div></div></section>
+<section id="a-stu" class="tab hidden"><h2>Students</h2>
+<div class="panel"><h3 id="fh">Add student</h3><div class="form">
+<div><label for="sid">Student ID</label><input id="sid" type="number"></div><div><label for="sname">Name</label><input id="sname"></div>
+<div><label for="sa">Age</label><input id="sa" type="number"></div><div><label for="sc">Course</label><input id="sc"></div>
+<div><label for="sr">Room (optional)</label><input id="sr" type="number" placeholder="101-120"></div><div><label for="sf">Fee paid</label><input id="sf" type="number" value="0"></div>
+<div class="row"><button id="sbtn" onclick="saveStu()">Add student</button><button id="scn" class="g hidden" onclick="clr()">Cancel</button></div></div>
+<p class="hint">New students sign in with their ID as the PIN. Leave the room empty and they can request one.</p></div>
+<div class="panel"><div class="form" style="margin-bottom:12px"><div><label for="q">Search by ID or name</label><input id="q" oninput="rStu()"></div>
+<div><label for="fl">Show</label><select id="fl" onchange="rStu()"><option value="">All students</option><option value="in">With a room</option><option value="out">Without a room</option></select></div>
+<div><label for="so">Sort by</label><select id="so" onchange="rStu()"><option value="id">ID</option><option value="name">Name</option><option value="room">Room</option></select></div></div>
+<div class="tw"><table><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Course</th><th>Room</th><th>Paid</th><th></th></tr></thead><tbody id="sb"></tbody></table></div></div></section>
+<section id="a-req" class="tab hidden"><h2>Room requests</h2><div class="panel"><div class="tw"><table><thead><tr><th>Student</th><th>Room</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody id="rq"></tbody></table></div></div></section>
+<section id="a-rooms" class="tab hidden"><h2>Rooms</h2><div class="panel"><div class="rooms" id="rg"></div>
+<div class="legend"><span>Green: empty</span><span>Orange: 1 of 2</span><span>Red: full</span><span>Dashed: blocked for maintenance</span></div></div>
+<div class="panel" id="rd"><h3>Select a room</h3><p class="hint">Click a room to view students or block it.</p></div></section>
+<section id="a-fees" class="tab hidden"><h2>Fees</h2>
+<div class="form" style="margin-bottom:12px;max-width:260px"><div><label for="ff">Show</label><select id="ff" onchange="rFees()"><option value="">Everyone</option><option value="unpaid">Unpaid</option><option value="partial">Partial</option><option value="paid">Paid</option></select></div></div>
+<div class="panel"><div class="tw"><table><thead><tr><th>ID</th><th>Name</th><th>Paid</th><th>Due</th><th>Progress</th><th>Status</th><th>Record payment</th></tr></thead><tbody id="fb"></tbody></table></div></div></section>
+<section id="a-cmp" class="tab hidden"><h2>Complaints</h2><div class="panel" id="cl"></div></section>
+<section id="a-notes" class="tab hidden"><h2>Notices</h2><div class="panel"><h3>Post a notice</h3><label for="nt">Message for all students</label><textarea id="nt" rows="3"></textarea><div style="margin-top:10px"><button onclick="addNote()">Post notice</button></div></div><div class="panel"><h3>Posted notices</h3><div id="nl"></div></div></section>
+<section id="a-set" class="tab hidden"><h2>Settings</h2>
+<div class="panel"><h3>Hostel fee</h3><div class="form"><div><label for="nf">Fee per student</label><input id="nf" type="number"></div><button onclick="setFee()">Save fee</button></div></div>
+<div class="panel"><h3>Change admin password</h3><div class="form"><div><label for="op">Current password</label><input id="op" type="password"></div><div><label for="npw">New password (4+ characters)</label><input id="npw" type="password"></div><button onclick="setPw()">Change password</button></div></div>
+<div class="panel"><h3>Backup and restore</h3><label for="bk">Copy this text to back up, or paste a backup and restore</label><textarea id="bk" rows="4"></textarea>
+<div class="row" style="margin-top:10px"><button class="g" onclick="exp()">Refresh backup text</button><button onclick="imp()">Restore from text</button></div></div>
+<div class="panel"><h3>Data tools</h3><div class="row"><button class="g" onclick="demo()">Load demo students</button><button class="d" id="rsb" onclick="reset()">Delete all data</button></div></div>
+<div class="panel"><h3>Activity log</h3><div class="log" id="log2"></div></div></section>
+</main></div>
+<div id="toast" class="hidden"></div>
+
+<script src="script.js"></script></body></html>
